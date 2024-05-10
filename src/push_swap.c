@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 03:11:53 by sbansacc          #+#    #+#             */
-/*   Updated: 2024/05/09 05:33:08 by sabansac         ###   ########.fr       */
+/*   Updated: 2024/05/10 01:29:41 by sbansacc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	push(t_list **stack_1, t_list **stack_2)
 		return (-1);
 	stack_1_head = *stack_1;
 	*stack_1 = (*stack_1)->next;
+	stack_1_head->next = NULL;
 	ft_lstadd_front(stack_2, stack_1_head);
 	return (0);
 }
@@ -45,6 +46,7 @@ int	rotate(t_list **stack)
 	newlast = *stack;
 	*stack = (*stack)->next;
 	ft_lstadd_back(stack, newlast);
+	newlast->next = NULL;
 	return (0);
 }
 
@@ -65,32 +67,42 @@ int	reverse_rotate(t_list **stack)
 	ft_lstadd_front(stack, newfirst);
 	return (0);
 }
+void print_list(t_list *list)
+{
+    t_list *current;
+
+	current = list;
+    ft_printf("[");
+    while (current)
+	{
+        ft_printf("%d", current->content);
+        if (current->next != NULL)
+            ft_printf(", ");
+        current = current->next;
+    }
+    ft_printf("]\n");
+}
 
 int	push_swap(char *cmd, t_list **stack_a, t_list **stack_b)
 {
+	int	check;
 	if (ft_strncmp(cmd, "pa", 2) == 0)
-		if (push(stack_a, stack_b) == (-1))
-			return (-1);
+		check = push(stack_b, stack_a);
 	if (ft_strncmp(cmd, "pb", 2) == 0)
-		if (push(stack_b, stack_a) == (-1))
-			return (-1);
+		check = push(stack_a, stack_b);
 	if (ft_strncmp(cmd, "sa", 2) == 0 || ft_strncmp(cmd, "ss", 2) == 0)
-		if (swap(stack_a) == (-1))
-			return (-1);
+		check = swap(stack_a);
 	if (ft_strncmp(cmd, "sb", 2) == 0 || ft_strncmp(cmd, "ss", 2) == 0)
-		if (swap(stack_b) == (-1))
-			return (-1);
+		check = swap(stack_b);
 	if (ft_strncmp(cmd, "rra", 3) == 0 || ft_strncmp(cmd, "rrr", 3) == 0)
-		if (reverse_rotate(stack_a) == (-1))
-			return (-1);
+		check = reverse_rotate(stack_a);
 	if (ft_strncmp(cmd, "rrb", 3) == 0 || ft_strncmp(cmd, "rrr", 3) == 0)
-		if (reverse_rotate(stack_b) == (-1))
-			return (-1);
+		check = reverse_rotate(stack_b);
 	if (ft_strncmp(cmd, "ra", 2) == 0 || ft_strncmp(cmd, "rr", 2) == 0)
-		if (rotate(stack_a) == (-1))
-			return (-1);
+		check = rotate(stack_a);
 	if (ft_strncmp(cmd, "rb", 2) == 0 || ft_strncmp(cmd, "rr", 2) == 0)
-		if (rotate(stack_b) == (-1))
-			return (-1);
-	return (ft_printf("%s\n", cmd));
+		check = rotate(stack_b);
+	if (check == 0)
+		ft_printf("%s\n", cmd);
+	return (0);
 }

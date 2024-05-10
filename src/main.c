@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 02:00:55 by sbansacc          #+#    #+#             */
-/*   Updated: 2024/05/09 05:13:37 by sabansac         ###   ########.fr       */
+/*   Updated: 2024/05/10 01:33:08 by sbansacc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	is_valid_nbr(char *tab)
 {
 	if (*tab == '-')
 		tab++;
-	while (tab)
+	while (*tab)
 	{
 		if (!ft_isdigit(*tab))
 			return (-1);
@@ -64,12 +64,14 @@ t_list	*init_stack(char **tab)
 {
 	t_list	*head;
 	t_list	*new;
-
 	head = NULL;
+	
 	while (*tab)
 	{
 		if (!is_valid_nbr(*tab))
-			return (NULL);
+		{
+			ft_printf("nope");
+		}
 		new = ft_lstnew(ft_atoi(*tab));
 		if (!new)
 		{
@@ -91,19 +93,21 @@ int	main(int ac, char **av)
 	stack_a = NULL;
 	stack_b = NULL;
 	if (ac < 2)
-		return (write(2, "Error\n", 6));
+		return (write(2, "Error1\n", 6));
 	else if (ac == 2)
 	{
 		tab = ft_split(av[1], ' ');
 		if (!tab)
-			return (write(2, "Error\n", 6));
+			return (write(2, "Error2\n", 6));
 		stack_a = init_stack(tab);
 		free_tab(tab);
 	}
 	else if (ac > 2)
-		stack_a = init_stack(av + 1);
+	{
+		stack_a = init_stack(av);
+	}
 	if (!stack_a)
-		return (write(2, "Error\n", 6));
+		return (write(2, "Error3\n", 6));
 	radix_sort(&stack_a, &stack_b);
 	free_lst(&stack_a);
 	return (0);

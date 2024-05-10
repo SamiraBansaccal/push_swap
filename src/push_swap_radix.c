@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_radix.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 23:12:55 by sbansacc          #+#    #+#             */
-/*   Updated: 2024/05/09 06:05:22 by sabansac         ###   ########.fr       */
+/*   Updated: 2024/05/10 01:34:19 by sbansacc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ void	negatives_sort(t_list **stack_a, t_list **stack_b)
 	while (lstlen)
 	{
 		value = (*stack_a)->content;
-		if (value > 0)
+		if (value < 0)
 			push_swap("ra", stack_a, stack_b);
 		else
 			push_swap("pb", stack_a, stack_b);
 		lstlen--;
 	}
-	while (stack_b)
+	while (*stack_b)
 		push_swap("pa", stack_a, stack_b);
 }
 
@@ -89,7 +89,7 @@ void	radix_sort(t_list **stack_a, t_list **stack_b)
 		while (i < lstlen)
 		{
 			value = (*stack_a)->content;
-			if (value >> bit & 1)
+			if ((value >> bit) & 1)
 				push_swap("ra", stack_a, stack_b);
 			else
 				push_swap("pb", stack_a, stack_b);
@@ -100,4 +100,5 @@ void	radix_sort(t_list **stack_a, t_list **stack_b)
 		bit++;
 	}
 	negatives_sort(stack_a, stack_b);
+	print_list(*stack_a);
 }
