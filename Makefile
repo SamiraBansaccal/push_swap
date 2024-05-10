@@ -6,7 +6,7 @@
 #    By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/09 03:23:28 by sabansac          #+#    #+#              #
-#    Updated: 2024/05/09 05:53:59 by sabansac         ###   ########.fr        #
+#    Updated: 2024/05/10 20:40:16 by sabansac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = gcc
 SRCDIR = src/
 INCLDIR = includes/
 CFLAGS = -Wall -Wextra -Werror -I$(INCLDIR)
-LFLAGS = -L. -lft -lftprintf
+LFLAGS = -L$(INCLDIR) -lft -lftprintf
 
 SRC_FILES = main.c \
 	push_swap.c \
