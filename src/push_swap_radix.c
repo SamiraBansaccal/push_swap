@@ -6,7 +6,7 @@
 /*   By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 23:12:55 by sbansacc          #+#    #+#             */
-/*   Updated: 2024/05/10 17:20:26 by sabansac         ###   ########.fr       */
+/*   Updated: 2024/05/14 00:59:53 by sabansac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,4 @@ void	radix_sort(t_list **stack_a, t_list **stack_b)
 		bit++;
 	}
 	negatives_sort(stack_a, stack_b);
-	print_list(*stack_a);
 }
