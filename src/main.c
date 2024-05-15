@@ -6,7 +6,7 @@
 /*   By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 02:00:55 by sbansacc          #+#    #+#             */
-/*   Updated: 2024/05/14 01:00:43 by sabansac         ###   ########.fr       */
+/*   Updated: 2024/05/15 05:15:13 by sabansac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,16 @@ int	is_uniq(t_list *lst)
 
 int	is_valid(char **tab)
 {
-	int	nbr;
-	int	i;
-	int	j;
+	long	nbr;
+	int		i;
+	int		j;
 
 	i = 0;
-	j = 0;
 	while (tab[i])
 	{
+		j = 0;
+		if (tab[i][j] == '-' && tab[i][j + 1])
+			j++;
 		while (tab[i][j])
 		{
 			if (ft_isdigit(tab[i][j]))
@@ -85,7 +87,7 @@ int	is_valid(char **tab)
 				return (0);
 		}
 		nbr = ft_atoi(tab[i]);
-		if (!(nbr > INT_MIN && nbr < INT_MAX))
+		if (!(nbr >= INT_MIN && nbr <= INT_MAX))
 			return (0);
 		i++;
 	}
@@ -140,7 +142,7 @@ int	main(int ac, char **av)
 		free_tab(tab);
 	}
 	else if (ac > 2)
-		stack_a = init_stack(av);
+		stack_a = init_stack(++av);
 	if (!stack_a)
 		return (write(2, "Error\n", 6));
 	radix_sort(&stack_a, &stack_b);

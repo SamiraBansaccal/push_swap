@@ -6,7 +6,7 @@
 /*   By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 23:12:55 by sbansacc          #+#    #+#             */
-/*   Updated: 2024/05/14 00:59:53 by sabansac         ###   ########.fr       */
+/*   Updated: 2024/05/15 06:01:35 by sabansac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,23 @@ void	negatives_sort(t_list **stack_a, t_list **stack_b)
 	while (*stack_b)
 		push_swap("pa", stack_a, stack_b);
 }
+int	is_sort(t_list *lst)
+{
+	t_list	*current;
+	t_list	*next;
+
+	current = lst;
+	next = current->next;
+	while ((current->content < next->content) && next)
+	{
+		current = next;
+		next = current->next;
+	}
+	if (!next)
+		return (1);
+	else
+		return (0);
+}
 
 void	radix_sort(t_list **stack_a, t_list **stack_b)
 {
@@ -96,6 +113,8 @@ void	radix_sort(t_list **stack_a, t_list **stack_b)
 		while (*stack_b)
 			push_swap("pa", stack_a, stack_b);
 		bit++;
+		if (is_sort(*stack_a))
+			return ;
 	}
 	negatives_sort(stack_a, stack_b);
 }
