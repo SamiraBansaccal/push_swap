@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+         #
+#    By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/09 03:23:28 by sabansac          #+#    #+#              #
-#    Updated: 2024/05/10 20:40:16 by sabansac         ###   ########.fr        #
+#    Updated: 2024/05/18 23:30:45 by sbansacc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME = push_swap
 CC = gcc
 SRCDIR = src/
 INCLDIR = includes/
-CFLAGS = -Wall -Wextra -Werror -I$(INCLDIR)
-LFLAGS = -L$(INCLDIR) -lft -lftprintf
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+LFLAGS = -I$(INCLDIR) -L$(INCLDIR) -lft -lftprintf
 
 SRC_FILES = main.c \
 	push_swap.c \
@@ -28,12 +28,10 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(SRCDIR)%.o: $(SRC)%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
+	$(CC) $(CFLAGS) $(LFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -o $@ $(LFLAGS)
-
+	$(CC) $(CFLAGS) $(OBJ) $(LFLAGS) -o $@
 
 clean:
 	rm -f $(SRCDIR)*.o

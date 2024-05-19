@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# Vérifier si leaks est installé
+if ! command -v leaks &> /dev/null; then
+    echo "leaks n'est pas installé. Veuillez installer les outils de ligne de commande de Xcode."
+    exit 1
+fi
+
+# Vérifier si ruby est installé
+if ! command -v ruby &> /dev/null; then
+    echo "Ruby n'est pas installé. Veuillez installer Ruby via Homebrew."
+    exit 1
+fi
+
+# Continuer avec le reste de votre script
+echo "leaks et Ruby sont installés."
+
 # -=-=-=-=-	CLRS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
 DEF_COLOR='\033[0;39m'
@@ -3654,10 +3669,19 @@ printf ${BLUE}"\n-------------------------------------------------------------\n
 printf ${BLUE}"\n\t\t  Random test with big nums\t\t\n"${DEF_COLOR};
 printf ${BLUE}"\n-------------------------------------------------------------\n\n"${DEF_COLOR};
 
-ARG=$(ruby -e "puts (-2147483648..-2147483149).to_a.shuffle.join(' ')");
+# Génération des nombres aléatoires
+echo "Generating random numbers..."
+ARG=$(ruby -e "puts (-2147483648..-2147483149).to_a.shuffle.join(' ')")
+echo "Random numbers generated: $ARG"
+
+# Exécution de push_swap
+echo "Running push_swap..."
 N=$(./push_swap $ARG | wc -l)
+echo "Number of operations for random test: $N"
+
 if [ $N -lt 5500 ]; then
 	printf "${GREEN}[OK][5/5]${DEF_COLOR}";
+	echo 'helloo\n'
 elif [ $N -gt 5500 ] && [ $N -lt 7000 ]; then
 	printf "${YELLOW}[OK][4/5]${DEF_COLOR}";
 elif [ $N -gt 7000 ] && [ $N -lt 8500 ]; then

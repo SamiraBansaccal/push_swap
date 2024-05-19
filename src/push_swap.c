@@ -6,7 +6,7 @@
 /*   By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 03:11:53 by sbansacc          #+#    #+#             */
-/*   Updated: 2024/05/10 01:29:41 by sbansacc         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:23:10 by sbansacc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,7 @@ int	push_swap(char *cmd, t_list **stack_a, t_list **stack_b)
 		check = rotate(stack_b);
 	if (check == 0)
 		ft_printf("%s\n", cmd);
+	else
+		return (-1);
 	return (0);
 }
