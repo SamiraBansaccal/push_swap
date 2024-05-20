@@ -3,46 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_radix.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+        */
+/*   By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 23:12:55 by sbansacc          #+#    #+#             */
-/*   Updated: 2024/05/19 01:03:41 by sbansacc         ###   ########.fr       */
+/*   Updated: 2024/05/20 02:37:47 by sabansac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void find_min_max_bits(t_list *stack, int *min_bits, int *max_bits)
+int find_max_bits(t_list *stack)
 {
-	long	min;
 	long	max;
 	long	next_value;
+	int		max_bits;
 
+	max_bits = 0;
 	if (!stack)
-		return ;
+		return (0);
 	max = stack->content;
-	min = stack->content;
 	while (stack)
 	{
 		next_value = stack->content;
 		if (max < next_value)
 			max = next_value;
-		if (min > next_value)
-			min = next_value;
 		stack = stack->next;
-	}
-	*min_bits = 0;
-    *max_bits = 0;
-    while (min && min != (-1))
-	{
-		min = min >> 1;
-        (*min_bits)++;
 	}
     while (max && max != (-1))
 	{
 		max = max >> 1;
-        (*max_bits)++;
+        max_bits++;
 	}
+	return (max_bits);
 }
 
 void	negatives_sort(t_list **stack_a, t_list **stack_b)
@@ -50,8 +42,10 @@ void	negatives_sort(t_list **stack_a, t_list **stack_b)
 	int	lstlen;
 	int	value;
 
+	if (!*stack_a)
+		return ;
 	lstlen = ft_lstsize(*stack_a);
-	while (lstlen - 1)
+	while (lstlen)
 	{
 		value = (*stack_a)->content;
 		if (value > 0)
@@ -83,56 +77,60 @@ int	is_sorted(t_list *lst)
 		return (0);
 }
 
+void insertion_sort(t_list **stack_a, t_list **stack_b) 
+{
+    // Assurez-vous que cette fonction utilise des méthodes appropriées pour votre structure de données
+    t_list *next;
+
+	while (*stack_a)
+	{
+		push_swap("pb", stack_a, stack_b);
+        next = (*stack_a)->next;
+        // Trouver la position correcte dans la liste triée
+        while (*stack_b && (*stack_b)->content < (*stack_a)->content)
+            push_swap("rb", stack_a, stack_b);
+        // Insérer l'élément courant dans la liste triée
+        push_swap("rb", stack_a, stack_b);
+    }
+    while (*stack_b)
+			push_swap("pa", stack_a, stack_b);
+}
+
 void	radix_sort(t_list **stack_a, t_list **stack_b)
 {
 	int	len_a;
-	int	len_b;
-	int	max_bits;
-	int min_bits;
 	int	bit;
 	int	value;
 
 	if (is_sorted(*stack_a) && !*stack_b)
-			return ;
-	find_min_max_bits(*stack_a, &min_bits, &max_bits);
-	min_bits = 0;
-	bit = min_bits;
-	while (bit < max_bits)
+		return ;
+	bit = find_max_bits(*stack_a);
+	while (bit > 0)
 	{
 		len_a = ft_lstsize(*stack_a);
 		while (len_a)
 		{
 			value = (*stack_a)->content;
-			len_a--;
-			if ((value >> bit) & 1)
-				push_swap("ra", stack_a, stack_b);
-			else
+			if (((value >> bit) & 3) < 2)
 				push_swap("pb", stack_a, stack_b);
-		}
-		len_b = ft_lstsize(*stack_b);
-		bit++;
-		/*ft_printf("BITEEEEEUH");*/
-		while (len_b)
-		{
-			value = (*stack_b)->content;
-			len_b--;
-			if ((value >> bit) & 1)
-				push_swap("pa", stack_a, stack_b);
 			else
-				push_swap("rb", stack_a, stack_b);
+				push_swap("ra", stack_a, stack_b);
+			len_a--;
 		}
+		while (*stack_b)
+			push_swap("pa", stack_a, stack_b);
 		if (is_sorted(*stack_a) && !*stack_b)
-			return ;/*
-		else
-			ft_printf("ENSUITE");*/
+			return ;
+		bit -= 2;
 	}
-	negatives_sort(stack_a, stack_b);
+	printf("SHIT\n");
+	print_list(*stack_a);
+	insertion_sort(stack_a, stack_b);
 	if (is_sorted(*stack_a) && !*stack_b)
 		return ;
-	/*else
+	else
 	{
-		ft_printf("shit");
+		printf("SHIT");
 		print_list(*stack_a);
-		return ;
-	}*/
+	}
 }
