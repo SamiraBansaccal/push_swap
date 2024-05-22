@@ -6,7 +6,7 @@
 #    By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/09 03:23:28 by sabansac          #+#    #+#              #
-#    Updated: 2024/05/18 23:30:45 by sbansacc         ###   ########.fr        #
+#    Updated: 2024/05/21 23:20:54 by sbansacc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,10 @@ LFLAGS = -I$(INCLDIR) -L$(INCLDIR) -lft -lftprintf
 
 SRC_FILES = main.c \
 	push_swap.c \
-	push_swap_radix.c \
+	radix_sort.c \
+	double_radix.c \
+	mini_sort.c \
+	args_validity.c \
 
 SRC = $(addprefix $(SRCDIR), $(SRC_FILES))
 

@@ -6,7 +6,7 @@
 /*   By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 03:11:53 by sbansacc          #+#    #+#             */
-/*   Updated: 2024/05/17 18:23:10 by sbansacc         ###   ########.fr       */
+/*   Updated: 2024/05/21 23:30:11 by sbansacc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,25 +67,11 @@ int	reverse_rotate(t_list **stack)
 	ft_lstadd_front(stack, newfirst);
 	return (0);
 }
-void print_list(t_list *list)
-{
-    t_list *current;
-
-	current = list;
-    ft_printf("[");
-    while (current)
-	{
-        ft_printf("%d", current->content);
-        if (current->next != NULL)
-            ft_printf(", ");
-        current = current->next;
-    }
-    ft_printf("]\n");
-}
 
 int	push_swap(char *cmd, t_list **stack_a, t_list **stack_b)
 {
 	int	check;
+
 	if (ft_strncmp(cmd, "pa", 2) == 0)
 		check = push(stack_b, stack_a);
 	if (ft_strncmp(cmd, "pb", 2) == 0)
@@ -105,6 +91,6 @@ int	push_swap(char *cmd, t_list **stack_a, t_list **stack_b)
 	if (check == 0)
 		ft_printf("%s\n", cmd);
 	else
-		return (-1);
-	return (0);
+		check = -1;
+	return (check);
 }
