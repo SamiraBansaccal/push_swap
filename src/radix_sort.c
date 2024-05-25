@@ -6,7 +6,7 @@
 /*   By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 23:12:55 by sbansacc          #+#    #+#             */
-/*   Updated: 2024/05/21 23:33:43 by sbansacc         ###   ########.fr       */
+/*   Updated: 2024/05/23 02:05:11 by sbansacc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,50 +37,18 @@ int	find_max_bits(t_list *stack)
 	return (max_bits);
 }
 
-int	negativs_in_lst(t_list *stack)
-{
-	while (stack)
-	{
-		if (stack->content < 0)
-			return (1);
-		stack = stack->next;
-	}
-	return (0);
-}
-
-void	negatives_sort(t_list **stack_a, t_list **stack_b)
-{
-	int	lstlen;
-	int	value;
-
-	if (!*stack_a || (!negativs_in_lst(*stack_a) || !negativs_in_lst(*stack_b)))
-		return ;
-	lstlen = ft_lstsize(*stack_a);
-	while (lstlen)
-	{
-		value = (*stack_a)->content;
-		if (value > 0)
-			push_swap("ra", stack_a, stack_b);
-		else
-			push_swap("pb", stack_a, stack_b);
-		lstlen--;
-	}
-	while (*stack_b)
-		push_swap("pa", stack_a, stack_b);
-}
-
 int	bit0_in_lst(t_list *stack, int bit)
 {
 	while (stack)
 	{
-		if (!((stack->content >> bit) & 1))
+		if (((stack->content >> bit) & 1) == 0)
 			return (1);
 		stack = stack->next;
 	}
 	return (0);
 }
 
-void	radix_sort(t_list **stack_a, t_list **stack_b)
+void radix_sort(t_list **stack_a, t_list **stack_b)
 {
 	int	len_a;
 	int	max_bit;
@@ -90,9 +58,9 @@ void	radix_sort(t_list **stack_a, t_list **stack_b)
 	bit = 0;
 	while (bit < max_bit && !is_sorted(*stack_a))
 	{
+		len_a = ft_lstsize(*stack_a);
 		if (bit0_in_lst(*stack_a, bit))
 		{
-			len_a = ft_lstsize(*stack_a);
 			while (len_a--)
 			{
 				if (((*stack_a)->content >> bit) & 1)
@@ -104,7 +72,6 @@ void	radix_sort(t_list **stack_a, t_list **stack_b)
 		bit++;
 		double_radix(stack_a, stack_b, bit);
 	}
-	negatives_sort(stack_a, stack_b);
 	while (*stack_b)
 		push_swap("pa", stack_a, stack_b);
 }

@@ -6,7 +6,7 @@
 #    By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/09 03:23:28 by sabansac          #+#    #+#              #
-#    Updated: 2024/05/21 23:20:54 by sbansacc         ###   ########.fr        #
+#    Updated: 2024/05/23 02:06:57 by sbansacc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC_FILES = main.c \
 	double_radix.c \
 	mini_sort.c \
 	args_validity.c \
+	optimised_cmd.c \
 
 SRC = $(addprefix $(SRCDIR), $(SRC_FILES))
 
