@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+         #
+#    By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/09 03:23:28 by sabansac          #+#    #+#              #
-#    Updated: 2024/05/23 02:06:57 by sbansacc         ###   ########.fr        #
+#    Updated: 2024/05/26 04:47:25 by sabansac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,8 @@ SRC_FILES = main.c \
 	mini_sort.c \
 	args_validity.c \
 	optimised_cmd.c \
+	malloc_stuff.c \
+	map_to_ranks.c \
 
 SRC = $(addprefix $(SRCDIR), $(SRC_FILES))
 

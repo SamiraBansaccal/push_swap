@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   double_radix.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+        */
+/*   By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 23:15:49 by sbansacc          #+#    #+#             */
-/*   Updated: 2024/05/22 23:02:17 by sbansacc         ###   ########.fr       */
+/*   Updated: 2024/05/26 01:42:56 by sabansac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
-
 
 int	b_is_sorted(t_list *lst)
 {
@@ -32,6 +31,7 @@ int	b_is_sorted(t_list *lst)
 	else
 		return (0);
 }
+
 int	bit1_in_lst(t_list *stack, int bit)
 {
 	while (stack)
@@ -51,7 +51,6 @@ void	double_radix(t_list **stack_a, t_list **stack_b, int bit)
 	len_b = ft_lstsize(*stack_b);
 	if (bit1_in_lst(*stack_b, bit))
 	{
-		
 		while (len_b--)
 		{
 			value = (*stack_b)->content;

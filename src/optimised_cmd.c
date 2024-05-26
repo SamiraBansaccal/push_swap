@@ -3,138 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   optimised_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+        */
+/*   By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 00:46:58 by sbansacc          #+#    #+#             */
-/*   Updated: 2024/05/25 04:13:14 by sbansacc         ###   ########.fr       */
+/*   Updated: 2024/05/26 04:45:10 by sabansac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void optimise_pa_pb(char **cmds)
-{
-    char *to_optimise;
-    char *new_part;
-    char *temp;
-
-    while ((to_optimise = ft_strnstr(*cmds, "pa\npb\n", ft_strlen(*cmds))) ||
-           (to_optimise = ft_strnstr(*cmds, "pb\npa\n", ft_strlen(*cmds))))
-    {
-        new_part = to_optimise + 6;
-        *to_optimise = '\0';
-        temp = ft_strjoin(*cmds, new_part);
-        free(*cmds);
-        *cmds = temp;
-    }
-}
-
-void optimise_ra_rb(char **cmds)
-{
-    char *to_optimise;
-    char *new_part;
-    char *temp;
-	char *final;
-
-    while ((to_optimise = ft_strnstr(*cmds, "ra\nrb\n", ft_strlen(*cmds))) ||
-           (to_optimise = ft_strnstr(*cmds, "rb\nra\n", ft_strlen(*cmds))))
-    {
-        new_part = to_optimise + 6;
-        *to_optimise = '\0';
-        temp = ft_strjoin(*cmds, "rr\n");
-        final = ft_strjoin(temp, new_part);
-        free(temp);
-        free(*cmds);
-        *cmds = final;
-    }
-}
-
-void optimised_cmd(char *cmds)
-{
-    char *optimised_cmds = ft_strdup(cmds);
-
-    if (!optimised_cmds)
-        return;
-
-    while (ft_strnstr(optimised_cmds, "pa\npb\n", ft_strlen(optimised_cmds)) ||
-           ft_strnstr(optimised_cmds, "pb\npa\n", ft_strlen(optimised_cmds)) ||
-           ft_strnstr(optimised_cmds, "ra\nrb\n", ft_strlen(optimised_cmds)) ||
-           ft_strnstr(optimised_cmds, "rb\nra\n", ft_strlen(optimised_cmds)))
-    {
-        optimise_pa_pb(&optimised_cmds);
-        optimise_ra_rb(&optimised_cmds);
-    }
-
-    *(optimised_cmds + ft_strlen(optimised_cmds) - 1) = '\0';
-    ft_printf("%s\n", optimised_cmds);
-    free(optimised_cmds);
-}
-
-/*
 void	optimise_pa_pb(char **cmds)
 {
 	char	*to_optimise;
-	char	*new_part;
-	
-	while (ft_strnstr(*cmds, "pa\npb\n", ft_strlen(*cmds)))
+	char	*new_cmds;
+	char	*part2;
+
+	while (ft_strnstr(*cmds, "pa\npb\n", ft_strlen(*cmds))
+		|| (ft_strnstr(*cmds, "pb\npa\n", ft_strlen(*cmds))))
 	{
 		to_optimise = ft_strnstr(*cmds, "pa\npb\n", ft_strlen(*cmds));
-		new_part = to_optimise +  6;
-		*to_optimise = 0;
-		*cmds = ft_strjoin(*cmds, new_part);
-	}
-	while (ft_strnstr(*cmds, "pb\npa\n", ft_strlen(*cmds)))
-	{
-		to_optimise = ft_strnstr(*cmds, "pb\npa\n", ft_strlen(*cmds));
-		new_part = to_optimise +  6;
-		*to_optimise = 0;
-		*cmds = ft_strjoin(*cmds, new_part);
+		if (!to_optimise)
+			to_optimise = ft_strnstr(*cmds, "pb\npa\n", ft_strlen(*cmds));
+		part2 = to_optimise + 6;
+		*to_optimise = '\0';
+		new_cmds = ft_strjoin(*cmds, part2);
+		free(*cmds);
+		*cmds = new_cmds;
 	}
 }
 
 void	optimise_ra_rb(char **cmds)
 {
 	char	*to_optimise;
-	char	*new_part;
-	char	*temp;
+	char	*part2;
+	char	*part1;
+	char	*new_cmds;
 
-	while (ft_strnstr(*cmds, "ra\nrb\n", ft_strlen(*cmds)) || 
-		(ft_strnstr(*cmds, "rb\nra\n", ft_strlen(*cmds))))
+	while (ft_strnstr(*cmds, "ra\nrb\n", ft_strlen(*cmds))
+		|| (ft_strnstr(*cmds, "rb\nra\n", ft_strlen(*cmds))))
 	{
-		while (ft_strnstr(*cmds, "ra\nrb\n", ft_strlen(*cmds)))
-		{
-			to_optimise = ft_strnstr(*cmds, "ra\nrb\n", ft_strlen(*cmds));
-			new_part = to_optimise +  6;
-			*to_optimise = 0;
-			temp = ft_strjoin(*cmds, "rr\n");
-			free(*cmds);
-			*cmds = ft_strjoin(temp, new_part);
-			free(temp);
-		}
-		while (ft_strnstr(*cmds, "rb\nra\n", ft_strlen(*cmds)))
-		{
-			to_optimise = ft_strnstr(*cmds, "pb\npa\n", ft_strlen(*cmds));
-			new_part = to_optimise +  6;
-			*to_optimise = 0;
-			temp = ft_strjoin(*cmds, "rr\n");
-			free(*cmds);
-			*cmds = ft_strjoin(temp, new_part);
-			free(temp);
-		}
+		to_optimise = ft_strnstr(*cmds, "ra\nrb\n", ft_strlen(*cmds));
+		if (!to_optimise)
+			to_optimise = ft_strnstr(*cmds, "rb\nra\n", ft_strlen(*cmds));
+		part2 = to_optimise + 6;
+		*to_optimise = '\0';
+		part1 = ft_strjoin(*cmds, "rr\n");
+		new_cmds = ft_strjoin(part1, part2);
+		free(part1);
+		free(*cmds);
+		*cmds = new_cmds;
 	}
 }
 
 void	optimised_cmd(char *cmds)
 {
-	while (ft_strnstr(cmds, "pa\npb\n", ft_strlen(cmds)) ||
-		ft_strnstr(cmds, "pb\npa\n", ft_strlen(cmds)) ||
-		ft_strnstr(cmds, "ra\nrb\n", ft_strlen(cmds)) ||
-		ft_strnstr(cmds, "rb\nra\n", ft_strlen(cmds)))
+	if (!cmds)
+		return ;
+	while (ft_strnstr(cmds, "pa\npb\n", ft_strlen(cmds))
+		|| ft_strnstr(cmds, "pb\npa\n", ft_strlen(cmds))
+		|| ft_strnstr(cmds, "ra\nrb\n", ft_strlen(cmds))
+		|| ft_strnstr(cmds, "rb\nra\n", ft_strlen(cmds)))
 	{
 		optimise_pa_pb(&cmds);
 		optimise_ra_rb(&cmds);
 	}
-	*(cmds + ft_strlen(cmds) - 1) = 0;
+	*(cmds + ft_strlen(cmds) - 1) = '\0';
 	ft_printf("%s\n", cmds);
 	free(cmds);
-}*/
+}
